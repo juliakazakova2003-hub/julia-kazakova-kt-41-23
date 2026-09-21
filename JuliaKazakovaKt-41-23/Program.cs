@@ -1,5 +1,7 @@
 using NLog;
 using NLog.Web;
+using Microsoft.EntityFrameworkCore;
+using JuliaKazakovaKt_41_23.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,11 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
+    builder.Services.AddDbContext<StudentDbContext>(
+    options =>
+        options.UseSqlServer(
+            builder.Configuration.GetConnectionString(
+                "DefaultConnection")));
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
