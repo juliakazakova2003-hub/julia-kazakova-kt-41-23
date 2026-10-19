@@ -2,6 +2,7 @@ using NLog;
 using NLog.Web;
 using Microsoft.EntityFrameworkCore;
 using JuliaKazakovaKt_41_23.Data;
+using JuliaKazakovaKt_41_23.ServiceExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,8 @@ try
         options.UseSqlServer(
             builder.Configuration.GetConnectionString(
                 "DefaultConnection")));
+
+    builder.Services.AddServices();
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
