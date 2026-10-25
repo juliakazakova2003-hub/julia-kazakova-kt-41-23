@@ -17,12 +17,20 @@ namespace JuliaKazakovaKt_41_23.Controllers
             _studentService = studentService;
         }
 
-        [HttpPost(Name = "GetStudentsByGroup")]
+        [HttpPost("by_groupname", Name = "GetStudentsByGroup")]
         public async Task<IActionResult> GetStudentsByGroupAsync(StudentGroupFilter filter, CancellationToken cancellationToken = default)
         {
             var students = await _studentService.GetStudentsByGroupAsync(filter, cancellationToken);
 
             return Ok(students);
         }
+        [HttpPost("by_lastname", Name = "GetStudentsByLastName")]
+        public async Task<IActionResult> GetStudentsByLastName(StudentLastNameFilter filter, CancellationToken cancellationToken = default)
+        {
+            var students = await _studentService.GetStudentsByLastNameAsync(filter, cancellationToken);
+
+            return Ok(students);
+        }
+
     }
 }

@@ -10,6 +10,7 @@ namespace JuliaKazakovaKt_41_23.Interfaces.StudentsInterfaces
     public interface IStudentService
     {
             public Task<Student[]> GetStudentsByGroupAsync(StudentGroupFilter filter,CancellationToken cancellationToken);
+        public Task<Student[]> GetStudentsByLastNameAsync(StudentLastNameFilter filter, CancellationToken cancellationToken);
     }
 
     public class StudentService : IStudentService
@@ -21,15 +22,38 @@ namespace JuliaKazakovaKt_41_23.Interfaces.StudentsInterfaces
             _dbContext = dbContext;
         }
 
-        /*public Task<Student[]> GetStudentsByGroupAsync(StudentGroupFilter filter,CancellationToken cancellationToken = default)
+        public Task<Student[]> GetStudentsByGroupAsync(StudentGroupFilter filter, CancellationToken cancellationToken = default)
         {
-            var students = _dbContext.Set<Student>().Where(w => w.Group.Name == filter.GroupName).ToArrayAsync(cancellationToken);
-                return students;
-        }*/
-        public async Task<Student[]> GetStudentsByGroupAsync(StudentGroupFilter filter,CancellationToken cancellationToken)
+            var students = _dbContext.Set<Student>()
+                .Where(w => w.Group.Name == filter.GroupName && !w.IsDeleted)
+                .Select(s => new Student
+                {
+                    StudentId = s.StudentId,
+                    FirstName = s.FirstName,
+                    LastName = s.LastName,
+                    GroupId = s.GroupId,
+                    Group = null
+                })
+                .ToArrayAsync(cancellationToken);
+            
+            return students;
+        }
+
+        public Task<Student[]> GetStudentsByLastNameAsync(StudentLastNameFilter filter, CancellationToken cancellationToken = default)
         {
-            return await _dbContext.Set<Student>().Where(s => s.Group.Name == filter.GroupName).Select(s => new Student
-                {StudentId = s.StudentId,FirstName = s.FirstName,LastName = s.LastName,GroupId = s.GroupId,IsDeleted = s.IsDeleted}).ToArrayAsync(cancellationToken);
+            var students = _dbContext.Set<Student>()
+                .Where(w => w.LastName == filter.LastName && !w.IsDeleted)
+                .Select(s => new Student
+                {
+                    StudentId = s.StudentId,
+                    FirstName = s.FirstName,
+                    LastName = s.LastName,
+                    GroupId = s.GroupId,
+                    Group = null
+                })
+                .ToArrayAsync(cancellationToken);
+
+            return students;
         }
     }
 }

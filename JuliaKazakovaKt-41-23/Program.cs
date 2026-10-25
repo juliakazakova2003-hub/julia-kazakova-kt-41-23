@@ -35,6 +35,8 @@ try
         app.UseSwaggerUI();
     }
 
+    app.UseMiddleware<ExceptionHandlerMiddleware>;
+
     app.UseAuthorization();
 
     app.MapControllers();
