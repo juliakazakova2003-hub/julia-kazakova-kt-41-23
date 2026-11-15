@@ -3,6 +3,7 @@ using NLog.Web;
 using Microsoft.EntityFrameworkCore;
 using JuliaKazakovaKt_41_23.Data;
 using JuliaKazakovaKt_41_23.ServiceExtensions;
+using JuliaKazakovaKt_41_23.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,7 +36,7 @@ try
         app.UseSwaggerUI();
     }
 
-    app.UseMiddleware<ExceptionHandlerMiddleware>;
+    app.UseMiddleware<ExceptionHandlerMiddleware>();
 
     app.UseAuthorization();
 

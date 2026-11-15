@@ -21,6 +21,18 @@ namespace JuliaKazakovaKt_41_23.Data
             modelBuilder.ApplyConfiguration(new SpecialtyConfiguration());
             modelBuilder.ApplyConfiguration(new DisciplineConfiguration());
             modelBuilder.ApplyConfiguration(new GradeConfiguration());
+
+            modelBuilder.Entity<Group>()
+                .Property(g => g.IsDeleted)
+                .HasDefaultValue(false);
+
+            modelBuilder.Entity<Student>()
+                .Property(s => s.IsDeleted)
+                .HasDefaultValue(false);
+
+            modelBuilder.Entity<Discipline>()
+                .Property(d => d.IsDeleted)
+                .HasDefaultValue(false);
         }
 
         public StudentDbContext(DbContextOptions<StudentDbContext> options) : base(options)

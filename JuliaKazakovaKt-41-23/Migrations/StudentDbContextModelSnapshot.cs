@@ -39,7 +39,9 @@ namespace JuliaKazakovaKt_41_23.Migrations
                         .HasComment("Направление дисциплины");
 
                     b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
+                        .HasDefaultValue(false)
                         .HasColumnName("c_is_deleted")
                         .HasComment("Признак удаления");
 
@@ -107,7 +109,9 @@ namespace JuliaKazakovaKt_41_23.Migrations
                         .HasComment("Курс");
 
                     b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
+                        .HasDefaultValue(false)
                         .HasColumnName("c_is_deleted")
                         .HasComment("Признак удаления");
 
@@ -184,7 +188,9 @@ namespace JuliaKazakovaKt_41_23.Migrations
                         .HasComment("Идентификатор группы");
 
                     b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
+                        .HasDefaultValue(false)
                         .HasColumnName("c_is_deleted")
                         .HasComment("Признак удаления");
 
